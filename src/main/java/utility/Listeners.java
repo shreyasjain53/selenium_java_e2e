@@ -13,8 +13,6 @@ import com.aventstack.extentreports.Status;
 
 import base.BaseClass;
 
-
-
 public class Listeners extends BaseClass implements ITestListener {
 
 	public ExtentTest test;
