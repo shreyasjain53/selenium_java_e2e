@@ -2,3 +2,9 @@
 /HTMLreports/
 /logs/
 /test-output/
+.idea/
+.settings/
+.DS_Store
+.classpath
+.project
+
