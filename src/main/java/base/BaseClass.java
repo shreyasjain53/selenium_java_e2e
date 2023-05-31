@@ -33,15 +33,22 @@ public class BaseClass{
 	private void loadProperties() throws IOException {
 		if(prop == null) {
 			prop = new Properties();
+			FileInputStream fis = null;
 			
 			try {
-				FileInputStream fis = new FileInputStream(System.getProperty("user.dir") + "\\src\\test\\resources\\config.properties");
+				 fis = new FileInputStream(System.getProperty("user.dir") + "\\src\\test\\resources\\config.properties");
 				prop.load(fis);
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();
 				log.error("Config file not found"+ e);
 			} catch (IOException e) {
 				e.printStackTrace();
+			}
+			finally {
+				
+				if(fis!=null) {
+					fis.close();
+				}
 			}
 		}
 	}

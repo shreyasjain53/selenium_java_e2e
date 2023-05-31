@@ -16,6 +16,11 @@ import org.testng.asserts.SoftAssert;
 import base.BaseClass;
 import pageObjects.HomePage;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.time.Duration;
 
 public class DemoTest extends BaseClass{
@@ -116,6 +121,25 @@ public class DemoTest extends BaseClass{
 
 		Actions act = new Actions(driver);
 		act.build().perform();
+	}
+	
+	@Test
+	public void pullValueFromDataBase() throws SQLException {
+
+		String dataBaseUrl = "jdbc:mysql://" + prop.getProperty("MysqlDataBaseConnection") + ":" + prop.getProperty("MysqlDataBaseRunningPort") + "/"+prop.getProperty("MysqlDataBasaName");
+
+		Connection connection = DriverManager.getConnection(dataBaseUrl, prop.getProperty("MysqlUserName"), prop.getProperty("MysqlPassword"));
+
+		Statement statement = connection.createStatement();
+
+		ResultSet result = statement.executeQuery("select * from EmployeeInfo where name='Shreyas'");
+
+		while (result.next()) {
+			System.out.println(result.getString("location"));
+			System.out.println(result.getString("name"));
+			int num = result.getInt(2);
+			System.out.println(num);
+		}
 	}
 
 	@AfterTest
