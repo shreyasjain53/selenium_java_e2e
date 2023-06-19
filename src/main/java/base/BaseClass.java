@@ -57,26 +57,25 @@ public class BaseClass{
 		loadProperties();
 		String platformName = prop.getProperty("platformName");
 		String browserName = prop.getProperty("browser");
-		DesiredCapabilities cap = new DesiredCapabilities();
 		
 		//For running in docker
 		if (platformName.equalsIgnoreCase("Docker")) {
 			
 			if (browserName.equalsIgnoreCase("chrome")) {
 
-				 cap = new DesiredCapabilities();
+				DesiredCapabilities cap = new DesiredCapabilities();
 				cap.setBrowserName("chrome");
 				
 				//docker run -d -p 4444:4444 --name selenium-container selenium/standalone-chrome
 				
-				URL url = new URL("http://localhost:4445/wd/hub");
+				URL url = new URL("http://localhost:4444/wd/hub");
 				driver = new RemoteWebDriver(url,cap);
 				log.info(browserName+" Invoked in"+" "+platformName);
 			}
 
 			else if (browserName.equalsIgnoreCase("firefox")) {
 				
-				 cap = new DesiredCapabilities();
+				DesiredCapabilities cap = new DesiredCapabilities();
 				cap.setBrowserName("firefox");
 				
 				//docker run -d -p 4444:4444 --name selenium-container selenium/standalone-firefox
@@ -88,7 +87,7 @@ public class BaseClass{
 
 			else if (browserName.equalsIgnoreCase("edge")) {
 				
-				 cap = new DesiredCapabilities();
+				DesiredCapabilities cap = new DesiredCapabilities();
 				cap.setBrowserName("MicrosoftEdge");
 				
 				//docker run -d -p 4444:4444 --name selenium-standalone selenium/standalone-edge
@@ -104,6 +103,7 @@ public class BaseClass{
 
 			if (browserName.equalsIgnoreCase("chrome")) {
 				
+				DesiredCapabilities cap = new DesiredCapabilities();
 				  cap = new DesiredCapabilities();
 				 
 				  	cap.setCapability("browserName", "chrome");
@@ -129,7 +129,6 @@ public class BaseClass{
 
 			else if (browserName.equalsIgnoreCase("firefox")) {
 				FirefoxOptions firefoxOptions = new FirefoxOptions();
-				firefoxOptions.addArguments("--remote-allow-origins=*");
 				driver = new FirefoxDriver(firefoxOptions);
 				log.info(browserName+" Invoked in"+" "+platformName);
 			}
