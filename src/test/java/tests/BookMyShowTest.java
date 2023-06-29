@@ -30,7 +30,7 @@ public class BookMyShowTest extends BaseClass {
 
 	}
 	
-	@AfterClass(enabled = false)
+	@AfterClass(enabled = true)
 	public void tearDown() {
 		if (driver != null) {
 			driver.quit();

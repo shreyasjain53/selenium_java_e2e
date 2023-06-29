@@ -10,6 +10,8 @@
 	<test thread-count="3" parallel="classes" name="Test">
 		<classes>
 			<class name="tests.BookMyShowTest" />
+			<class name="tests.DemoTest" />
+			<class name="tests.OrderAnItem" />
 		</classes>
 	</test>
 </suite>

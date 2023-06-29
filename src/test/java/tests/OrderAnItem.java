@@ -2,6 +2,7 @@ package tests;
 
 import java.io.IOException;
 
+import org.apache.logging.log4j.LogManager;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -11,10 +12,13 @@ import action.Action;
 import base.BaseClass;
 import pageObjects.HomePageShopping;
 import pageObjects.LoginPageShopping;
+import org.apache.logging.log4j.Logger;
 
 
 
 public class OrderAnItem extends BaseClass {
+	
+	private static final Logger log = LogManager.getLogger(OrderAnItem.class);
 
 	public WebDriver driver;
 
@@ -57,6 +61,7 @@ public class OrderAnItem extends BaseClass {
 
 		// Perform back button
 		driver.navigate().back();
+		Thread.sleep(10000);
 
 		act.explicitWait(driver, hp.gethamburgerCloseIcon(), 20);
 		hp.gethamburgerCloseIcon().click();
@@ -78,7 +83,9 @@ public class OrderAnItem extends BaseClass {
 
 		softAssert.assertEquals(hp.getCheckOutOverView(), checkout);
 
+		log.info("Shopping cart test passed");
 		softAssert.assertAll();
+		
 	}
 
 }

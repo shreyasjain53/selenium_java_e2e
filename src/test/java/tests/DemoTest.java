@@ -124,7 +124,7 @@ public class DemoTest extends BaseClass{
 		act.build().perform();
 	}
 	
-	@Test(priority=3,enabled=false)
+	@Test(priority=3,enabled=true)
 	public void pullValueFromDataBase() throws SQLException {
 
 		String dataBaseUrl = "jdbc:mysql://" + prop.getProperty("MysqlDataBaseConnection") + ":" + prop.getProperty("MysqlDataBaseRunningPort") + "/"+prop.getProperty("MysqlDataBasaName");
