@@ -9,9 +9,11 @@
 	
 	<test thread-count="3" parallel="classes" name="Test">
 		<classes>
+			<class name="tests.BookMyShowTest" />
 			<class name="tests.DemoTest" />
-			<class name="tests.DemoTest2" />
-			<class name="tests.DemoTest3" />
+			<class name="tests.DataProviderLoginTest" />
+			<class name="tests.FaceBookLogin" />
+			<class name="tests.Rediff" />
 		</classes>
 	</test>
 </suite>
