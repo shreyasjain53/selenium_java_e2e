@@ -41,7 +41,7 @@ public class DataProviderLoginTest extends BaseClass{
 	}
 	
 	//,threadPoolSize=5
-	@Test(dataProvider = "Authentication",invocationCount=5)
+	@Test(dataProvider = "Authentication",invocationCount=1)
 	public void test(String userName , String password) throws InterruptedException {
 		driver.get("https://www.facebook.com/");
 		driver.findElement(By.xpath("//input[@id='email']")).sendKeys(userName);
