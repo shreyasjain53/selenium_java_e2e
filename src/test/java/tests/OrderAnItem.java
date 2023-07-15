@@ -51,7 +51,7 @@ public class OrderAnItem extends BaseClass {
 		LoginPageShopping lp = new LoginPageShopping(driver);
 		HomePageShopping hp = new HomePageShopping(driver);
 		SoftAssert softAssert = new SoftAssert();
-		Action act = new Action();
+		Action act = new Action(driver);
 
 		lp.loginToSauceDemo("standard_user", "secret_sauce");
 		hp.gethamBurgerMenu().click();
@@ -63,9 +63,9 @@ public class OrderAnItem extends BaseClass {
 		driver.navigate().back();
 		Thread.sleep(10000);
 
-		act.explicitWait(driver, hp.gethamburgerCloseIcon(), 20);
+		act.explicitWait( hp.gethamburgerCloseIcon(), 20);
 		hp.gethamburgerCloseIcon().click();
-		act.explicitWait(driver, hp.gethamburgerCloseIcon(), 10);
+		act.explicitWait( hp.gethamburgerCloseIcon(), 10);
 
 		softAssert.assertEquals(hp.getproductText(), productText,
 				"Page redirecting to other URL" + "=" + driver.getCurrentUrl());
