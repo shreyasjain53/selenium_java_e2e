@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
@@ -30,6 +31,12 @@ public class FaceBookLogin extends BaseClass {
 		driver.findElement(By.name("login")).click();
 		String errorMsg = driver.findElement(By.className("_9ay7")).getText();
 		System.out.println(errorMsg);
+	}
+	
+	@AfterClass
+	public void tearDown() throws InterruptedException {
+		Thread.sleep(5000);
+		driver.quit();
 	}
 
 }
