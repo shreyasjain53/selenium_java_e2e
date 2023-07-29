@@ -15,7 +15,7 @@ import base.BaseClass;
 
 public class DataProviderLoginTest extends BaseClass{
 	
-	private static final Logger log = LogManager.getLogger(OrderAnItem.class);
+	private static final Logger log = LogManager.getLogger(DataProviderLoginTest.class);
 
 	public WebDriver driver;
 	
@@ -47,6 +47,5 @@ public class DataProviderLoginTest extends BaseClass{
 		driver.findElement(By.xpath("//input[@id='email']")).sendKeys(userName);
 		driver.findElement(By.xpath("//input[@id='pass']")).sendKeys(password);
 		driver.findElement(By.xpath("(//button[normalize-space()='Log in'])[1]")).click();
-		Thread.sleep(2000);
 	}
 }

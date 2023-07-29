@@ -21,16 +21,25 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.BeforeTest;
+
+import utility.DockerStart;
+import utility.DockerStop;
+
 import org.apache.commons.io.FileUtils;
 
 public class BaseClass{
 
 	private static final Logger log = LogManager.getLogger(BaseClass.class);
-	public Properties prop;
+	public static Properties prop;
 	public WebDriver driver;
+	
+	
 
-
-	private void loadProperties() throws IOException {
+	
+	private static void loadProperties() throws IOException {
 		if(prop == null) {
 			prop = new Properties();
 			FileInputStream fis = null;
@@ -53,11 +62,31 @@ public class BaseClass{
 		}
 	}
 
+	@BeforeTest
+	public void startDocker() throws IOException, InterruptedException {
+		loadProperties();
+		
+		if (prop.getProperty("platformName").equalsIgnoreCase("Docker")) {
+			DockerStart dockerstart = new DockerStart();
+			dockerstart.startContainer();
+			log.info("Docker Container Started successfully");
+		}
+	}
+	
+	@AfterTest
+	public void stopDocker() throws IOException, InterruptedException {
+		loadProperties();
+		if (prop.getProperty("platformName").equalsIgnoreCase("Docker")) {
+			DockerStop dockerstop = new DockerStop();
+			dockerstop.stopContainer();
+			log.info("Docker Container Stopped successfully");
+		}
+	}
+
 	public WebDriver launchBrowser() throws IOException {
 		loadProperties();
 		String platformName = prop.getProperty("platformName");
 		String browserName = prop.getProperty("browser");
-		
 		//For running in docker
 		if (platformName.equalsIgnoreCase("Docker")) {
 			
@@ -66,9 +95,7 @@ public class BaseClass{
 				DesiredCapabilities cap = new DesiredCapabilities();
 				cap.setBrowserName("chrome");
 				
-				//docker run -d -p 4444:4444 --name selenium-container selenium/standalone-chrome
-				
-				URL url = new URL("http://localhost:4444/wd/hub");
+				URL url = new URL(prop.getProperty("DockerURL"));
 				driver = new RemoteWebDriver(url,cap);
 				log.info(browserName+" Invoked in"+" "+platformName);
 			}
@@ -77,10 +104,8 @@ public class BaseClass{
 				
 				DesiredCapabilities cap = new DesiredCapabilities();
 				cap.setBrowserName("firefox");
-				
-				//docker run -d -p 4444:4444 --name selenium-container selenium/standalone-firefox
 
-				URL url = new URL("http://localhost:4444/wd/hub");
+				URL url = new URL(prop.getProperty("DockerURL"));
 				driver = new RemoteWebDriver(url,cap);
 				log.info(browserName+" Invoked in"+" "+platformName);
 			}
@@ -89,31 +114,9 @@ public class BaseClass{
 				
 				DesiredCapabilities cap = new DesiredCapabilities();
 				cap.setBrowserName("MicrosoftEdge");
-				
-				//docker run -d -p 4444:4444 --name selenium-standalone selenium/standalone-edge
 
-
-				URL url = new URL("http://localhost:4444/wd/hub");
+				URL url = new URL(prop.getProperty("DockerURL"));
 				driver = new RemoteWebDriver(url,cap);
-				log.info(browserName+" Invoked in"+" "+platformName);
-			}
-		}
-
-		else if (platformName.equalsIgnoreCase("Cloud")) {
-
-			if (browserName.equalsIgnoreCase("chrome")) {
-				
-				DesiredCapabilities cap = new DesiredCapabilities();
-				  cap = new DesiredCapabilities();
-				 
-				  	cap.setCapability("browserName", "chrome");
-			        cap.setCapability("version", "latest");
-			        cap.setCapability("platform", "win10");
-			        cap.setCapability("selenium_version", "4.8.0");
-			        
-				 String gridUrl = "https://" + prop.getProperty("lamdaUserName") + ":" + prop.getProperty("lamdaAccesskey") + "@hub.lambdatest.com/wd/hub";
-				
-				driver = new RemoteWebDriver(new URL(gridUrl), cap);
 				log.info(browserName+" Invoked in"+" "+platformName);
 			}
 		}
@@ -158,6 +161,7 @@ public class BaseClass{
 		return destinationFile;
 	}	
 
+	
 
 
 

@@ -12,10 +12,14 @@ import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 import base.BaseClass;
 import pageObjects.HomePage;
+import utility.DockerStart;
+import utility.DockerStop;
+
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -24,13 +28,15 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.Duration;
 
-public class DemoTest extends BaseClass{
+public class Bank_Login extends BaseClass{
 
-	private static final Logger log = LogManager.getLogger(DemoTest.class);
+	private static final Logger log = LogManager.getLogger(Bank_Login.class);
 	public WebDriver driver;
 	
 	HomePage hp;
 	SoftAssert assertion = new SoftAssert();
+	
+	
 			
 	@BeforeClass
 	public void browserLaunch() throws IOException {
@@ -124,7 +130,7 @@ public class DemoTest extends BaseClass{
 		act.build().perform();
 	}
 	
-	@Test(priority=3,enabled=true)
+	@Test(priority=3,enabled=false)
 	public void pullValueFromDataBase() throws SQLException {
 
 		String dataBaseUrl = "jdbc:mysql://" + prop.getProperty("MysqlDataBaseConnection") + ":" + prop.getProperty("MysqlDataBaseRunningPort") + "/"+prop.getProperty("MysqlDataBasaName");
