@@ -13,13 +13,12 @@ import org.testng.annotations.Test;
 
 import base.BaseClass;
 
-public class DataProviderLoginTest extends BaseClass{
-	
+public class DataProviderLoginTest extends BaseClass {
+
 	private static final Logger log = LogManager.getLogger(DataProviderLoginTest.class);
 
 	public WebDriver driver;
-	
-	
+
 	@BeforeClass
 	public void browserLaunch() throws IOException {
 		driver = launchBrowser();
@@ -35,14 +34,13 @@ public class DataProviderLoginTest extends BaseClass{
 	@DataProvider(name = "Authentication")
 	public static Object[][] credentials() {
 
-		return new Object[][] { { "testuser_1", "Test@123" },
-								{ "testuser_2", "Test@123" },
-								{ "testuser_3", "Test@123" }};
+		return new Object[][] { { "testuser_1", "Test@123" }, { "testuser_2", "Test@123" },
+				{ "testuser_3", "Test@123" } };
 	}
-	
-	//,threadPoolSize=5
-	@Test(dataProvider = "Authentication",invocationCount=1)
-	public void test(String userName , String password) throws InterruptedException {
+
+	// ,threadPoolSize=5
+	@Test(dataProvider = "Authentication", invocationCount = 1)
+	public void test(String userName, String password) throws InterruptedException {
 		driver.get("https://www.facebook.com/");
 		driver.findElement(By.xpath("//input[@id='email']")).sendKeys(userName);
 		driver.findElement(By.xpath("//input[@id='pass']")).sendKeys(password);

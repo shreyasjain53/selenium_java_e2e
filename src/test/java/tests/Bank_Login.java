@@ -1,5 +1,13 @@
 package tests;
 
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.time.Duration;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.Alert;
@@ -10,37 +18,24 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
-import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
+
 import base.BaseClass;
 import pageObjects.HomePage;
-import utility.DockerStart;
-import utility.DockerStop;
 
-import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.time.Duration;
-
-public class Bank_Login extends BaseClass{
+public class Bank_Login extends BaseClass {
 
 	private static final Logger log = LogManager.getLogger(Bank_Login.class);
 	public WebDriver driver;
-	
+
 	HomePage hp;
 	SoftAssert assertion = new SoftAssert();
-	
-	
-			
+
 	@BeforeClass
 	public void browserLaunch() throws IOException {
-		driver =launchBrowser();
+		driver = launchBrowser();
 
 		// Maximize Window
 		driver.manage().window().maximize();
@@ -55,17 +50,17 @@ public class Bank_Login extends BaseClass{
 	@Test(priority = 1)
 	public void CustomerLogin() {
 		hp = new HomePage(driver);
-		
+
 		// Invoke URL
 		driver.get(prop.getProperty("URL"));
 		log.info("URL got opened in browser");
-		
+
 		// Login as Customer
 		Assert.assertEquals(hp.customerLogin.getText(), "Customer Login");
 		log.info("Login as Customer");
 
 		hp.customerLogin.click();
-		
+
 		System.out.println(driver.getTitle());
 		log.info(driver.getTitle());
 
@@ -84,7 +79,7 @@ public class Bank_Login extends BaseClass{
 	@Test(priority = 2)
 	public void BankManagerLogin() {
 		hp = new HomePage(driver);
-		
+
 		// Navigate to HomePage
 		hp.home.click();
 		log.info("Navigated to HomePage");
@@ -123,19 +118,21 @@ public class Bank_Login extends BaseClass{
 
 		hp.home.click();
 
-		WebDriverWait myWait = new WebDriverWait(driver,Duration.ofSeconds(10));
+		WebDriverWait myWait = new WebDriverWait(driver, Duration.ofSeconds(10));
 		myWait.until(ExpectedConditions.visibilityOf(hp.customerLogin));
 
 		Actions act = new Actions(driver);
 		act.build().perform();
 	}
-	
-	@Test(priority=3,enabled=false)
+
+	@Test(priority = 3, enabled = false)
 	public void pullValueFromDataBase() throws SQLException {
 
-		String dataBaseUrl = "jdbc:mysql://" + prop.getProperty("MysqlDataBaseConnection") + ":" + prop.getProperty("MysqlDataBaseRunningPort") + "/"+prop.getProperty("MysqlDataBasaName");
+		String dataBaseUrl = "jdbc:mysql://" + prop.getProperty("MysqlDataBaseConnection") + ":"
+				+ prop.getProperty("MysqlDataBaseRunningPort") + "/" + prop.getProperty("MysqlDataBasaName");
 
-		Connection connection = DriverManager.getConnection(dataBaseUrl, prop.getProperty("MysqlUserName"), prop.getProperty("MysqlPassword"));
+		Connection connection = DriverManager.getConnection(dataBaseUrl, prop.getProperty("MysqlUserName"),
+				prop.getProperty("MysqlPassword"));
 
 		Statement statement = connection.createStatement();
 
@@ -151,19 +148,16 @@ public class Bank_Login extends BaseClass{
 
 	@AfterClass
 	public void tearDown() {
-		if (driver!=null) {
+		if (driver != null) {
 			driver.quit();
 			log.info("Browser closed");
 		}
-		
-		
+
 //		log.debug("debug");
 //		log.fatal("fatal");
 //		log.error("error");
 //		log.warn("warn");
 //		log.info("info");
 	}
-
-	
 
 }

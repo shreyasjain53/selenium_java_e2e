@@ -3,15 +3,22 @@
 
 <suite parallel="classes" name="Suite">
 
+<parameter name="URL" value="https://www.facebook.com/"></parameter>
+<parameter name="userName" value="USSSSS"></parameter>
+<parameter name="password" value="Username"></parameter>
+
 	<listeners>
 		<listener class-name="utility.Listeners"/>
 	</listeners>
 	
-	<test thread-count="3" parallel="classes" name="Test">
+	<test thread-count="3" parallel="classes" verbose="3" name="Test">
 		<classes>
+		
 			<class name="tests.Bank_Login" />
-			<class name="tests.FaceBookLogin" />
 			<class name="tests.DataProviderLoginTest" />
+			<class name="tests.FaceBook" />
+			<class name="tests.SocialMedia" />
+		
 		</classes>
 	</test>
 </suite>
