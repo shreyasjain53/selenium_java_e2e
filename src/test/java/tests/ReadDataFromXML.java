@@ -29,6 +29,8 @@ public class ReadDataFromXML {
 
 		NodeList employeeList = xml.getDocumentElement().getElementsByTagName("Employee");
 
+		System.out.println(employeeList.getLength());
+
 		for (int i = 0; i < employeeList.getLength(); i++) {
 
 			Element element = (Element) employeeList.item(i);
